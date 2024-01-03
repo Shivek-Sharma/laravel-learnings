@@ -33,6 +33,10 @@ Route::view('/template', 'template'); // /resources/views/template.blade.php
 //     return 'User ' . $id;
 // })
 
+Route::put('/blog/{id}', function ($id) {
+    //
+})->middleware('role:author');
+
 // Order of route parameters matters, not the name
 Route::get('/posts/{post}/comments/{comment}', function ($postId, $commentId) {
     return 'Post ' . $postId . ' and Comment ' . $commentId;
@@ -106,11 +110,17 @@ Route::domain('{account}.example.com')->group(function () {
 });
 
 // Route Prefixes
-Route::prefix('admin')->group(function () {
+Route::middleware('isValid')->prefix('admin')->group(function () {
     Route::get('/users', function () {
         // Matches the "/admin/users" URL
         return 'This is users route for Admin';
     });
+
+    // The 'withoutMiddleware' can only remove route middleware and does not apply to global middleware
+    Route::get('/posts', function () {
+        // Matches the "/admin/posts" URL
+        return 'This is posts route for Admin';
+    })->withoutMiddleware('isValid');
 });
 
 // Route Name Prefixes
