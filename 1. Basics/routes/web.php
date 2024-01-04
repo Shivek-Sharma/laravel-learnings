@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// php artisan route:list (list all the routes)
+// php artisan route:cache (execute only after defining all the routes)
+// php artisan route:clear (clears route cache)
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -50,9 +54,9 @@ Route::get('/region/{region?}', function ($region = 'Asia') {
 
 /* ---------------------- Regex Constraints ----------------------- */
 
-Route::get('/user/{id}', function ($id) {
-    return 'User ' . $id;
-})->where('id', '[0-9]+');
+// Route::get('/user/{id}', function ($id) {
+//     return 'User ' . $id;
+// })->where('id', '[0-9]+')
 
 // Route::get('/user/{id}/{name}', function ($id, $name) {
 //     return 'User ' . $id . ' Name ' . $name;
@@ -65,13 +69,17 @@ Route::get('/user/{id}/{name}', function ($id, $name) {
 
 /* ---------------------- Named Routes ----------------------- */
 
-// Route::get('/user/profile', function () {
-//     return 'This is profile page';
+Route::get('/author/profile', function () {
+    return 'This is profile page for blog author';
+})->name('profile'); // route('profile')
+
+// Route::get('/user/{id}/profile', function ($id) {
+//     //
 // })->name('profile')
 
-Route::get('/user/{id}/profile', function ($id) {
-    //
-})->name('profile');
+Route::get('/user/login', function () {
+    return 'This is user login page';
+})->name('login'); // route('login')
 
 
 /* ---------------------- Route Groups ----------------------- */

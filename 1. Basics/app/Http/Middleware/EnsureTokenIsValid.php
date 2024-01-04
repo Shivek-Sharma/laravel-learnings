@@ -1,5 +1,7 @@
 <?php
 
+// php artisan make:middleware EnsureTokenIsValid
+
 namespace App\Http\Middleware;
 
 use Closure;
