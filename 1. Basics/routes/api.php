@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,18 @@ Route::get('/user/{id}', [UserController::class, 'show']);
 
 // When registering routes for single action controllers, you do not need to specify a controller method
 Route::get('/sac', SingleActionController::class);
+
+// Executing Commands outside of the CLI
+Route::post('/user/{user}/mail', function ($user) {
+    $exitCode = Artisan::call('mail:send', [
+        'user' => $user, '--queue' => 'default'
+    ]);
+
+    // Queueing Artisan Commands
+    Artisan::queue('mail:send', [
+        'user' => $user, '--queue' => 'default'
+    ])->onConnection('redis')->onQueue('commands');
+});
 
 
 /* ---------------- Resource Controllers -------------------- */

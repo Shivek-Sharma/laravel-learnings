@@ -17,3 +17,13 @@ use Illuminate\Support\Facades\Artisan;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
+
+// php artisan hello
+Artisan::command('hello', function () {
+    $this->info('Hello World!');
+});
+
+// php artisan msg:send 2
+Artisan::command('msg:send {user}', function ($user) {
+    $this->info("Sending message to the user having ID: {$user}!");
+})->purpose('Send a marketing message to a user');
